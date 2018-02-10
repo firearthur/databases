@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>chatterbox</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/tether/dist/css/tether.min.css">
+
+    <!-- dependencies -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/tether/dist/js/tether.min.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script>
+      // YOU DO NOT NEED TO EDIT THIS CODE
+      if (!/(&|\?)username=/.test(window.location.search)) {
+        var newSearch = window.location.search;
+        if (newSearch !== '' & newSearch !== '?') {
+          newSearch += '&';
+        }
+        newSearch += 'username=' + (prompt('What is your name?') || 'anonymous');
+        window.location.search = newSearch;
+      }
+    </script>
+    <!-- your scripts -->
+    <script src="env/config.js"></script>
+    <script src="scripts/app.js"></script>
+    
+  </head>
+  <body>
+    <section class="container">
+      <div id="main">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-3 text-center">ChatterBox</h1>
+          </div>
+        </div>
+        <!-- Your HTML goes here! -->
+        <form id="rooms" class="form-control">
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon">Room</div>
+            <select class= "form-control" id='roomSelect'>
+            </select>
+          </div>
+          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+            <div class="input-group-addon">+</div>
+            <input name = 'roomName form-control' id= "roomName" type="text">
+            <button id= "submitRoomName" class= "btn btn-primary">Create</button>
+          </div>
+        </form>
+        <div>
+          <form id="send">
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+              <div class="input-group-addon">+</div>
+              <input type="text" id='messageText' class='form-control' type='textarea' />
+              <!--<input type="submit" value="Send" class='submit btn btn-success' id="sendMessage">-->
+              <button class='submit btn btn-primary' id="sendMessage">Send</button>
+            </div>
+          </form>
+        </div>
+        <button class='btn btn-primary getMessages'>GET</button>
+        <button class='btn btn-secondary clearMessages'>CLEAR</button>
+        <button class='btn btn-secondary' id="pause">PAUSE</button>
+      </div>
+      <section id="chats"></section>
+    </section>
+  </body>
+</html>
