@@ -16,7 +16,7 @@ module.exports = {
     }, // a function which produces all the messages
     post: function (message, callback) {
       // db.connection.connect();
-      console.log('here is the message before db',message);
+      // console.log('here is the message before db',message);
       db.connection.query(`INSERT INTO messages (username, messageText) VALUES ('${message.username}', '${message.messageText}');`, function (error, results, fields) {
         if (error) throw error;
         // console.log('fields is: ', fields);

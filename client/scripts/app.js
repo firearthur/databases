@@ -1,5 +1,5 @@
 
-const BASEURL = 'http://localhost:3000/classes';
+const BASEURL = 'http://127.0.0.1:3000/classes';
 // const BASEURL = 'http://localhost:3000/chatterbox/classes';
 
 
@@ -17,8 +17,8 @@ const composeMessageDisplay = (message) => {
   $date.addClass('message__date');
   $date.text(dateText);
 
-  let messageText = cleanText(message.text);
-  let $text = $('<p></p>').text(messageText);
+  let messageT = cleanText(message.messageText);
+  let $text = $('<p></p>').text(messageT);
   $text.addClass('message__text');
 
   $message.append($user).append($text).append($date);
@@ -67,7 +67,7 @@ const dateFromNow = function (date) {
 
 const app = {
   state: {
-    user: "Eminem",
+    user: window.prompt('Name: ') || 'Mars',
     activeRoom: '',
     messages: {},
     messageList: [],
@@ -92,7 +92,7 @@ app.send = function (message) {
     // };
 
   myM.username = message.username;
-  myM.messageText = message.text;
+  myM.messageText = message.messageText;
   console.log('this is my message', myM);
   $.ajax({
     url: `${BASEURL}/messages`,
@@ -132,7 +132,7 @@ app.fetch = function() {
       success: function (data) {
         console.log('chatterbox: Messages recieved');
         console.log('this is the data from the client app.js',data);
-        app.processFeed(data.results);
+        app.processFeed(data);
       },
       error: function (data) {
         // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
@@ -150,23 +150,25 @@ app.clearMessages = function() {
 };
 
 app.processFeed = function(data = []) {
+  debugger;
   data.forEach( (message) => {
-    if ( message.text && message.text.trim() ) {
-      if ( !this.state.messages[message.objectId] ) {
-        this.state.messageList.push(message.objectId);
-        this.state.messages[message.objectId] = message; // consider caching message 
+    if ( message.messageText) {
+      if ( !this.state.messages[message.id] ) {
+        this.state.messageList.push(message.id);
+        this.state.messages[message.id] = message; // consider caching message 
       }
     }
-    if ( !this.state.rooms.has(message.roomname) ) {
-      this.addRoom(roomname);
-    }
+    // if ( !this.state.rooms.has(message.roomname) ) {
+    //   this.addRoom(roomname);
+    // }
   });
-  app.refreshRooms();
+  // app.refreshRooms();
   app.renderMessages();
 };
 
 app.renderMessages = function() {
-  this.state.messageList.reverse();
+  // this.state.messageList.reverse();
+  console.log('these are the messages from the state',this.state.messageList );
   this.state.messageList.forEach(function(messageId) {
     if ( !app.state.renderedMessages.includes(messageId) ) {
       app.renderMessage(app.state.messages[messageId]);
@@ -204,8 +206,8 @@ app.renderMessage = function(message) {
   $date.addClass('message__date text-muted text-right');
   $date.text(dateText);
 
-  let messageText = cleanText(message.text);
-  let $text = $('<p></p>').html(messageText);
+  let messageT = cleanText(message.messageText);
+  let $text = $('<p></p>').html(messageT);
   $text.addClass('message__text');
 
   $message.append($user).append($text);
